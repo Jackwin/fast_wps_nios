@@ -19,7 +19,10 @@ greybox_tmp
 
 ##filter software hdmi
 /hdmi/*
-!/hdmi/modelsim/
+!/hdmi/rtl/
+!/hdmi/tb/
+!/hdmi/HDMI_Lib/
+!/hdmi/terasic_lib/
 *.elf
 *.objdump
 *.wlf

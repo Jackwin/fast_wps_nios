@@ -18,6 +18,8 @@ greybox_tmp
 !/nios/synthesis/*.qip
 
 ##filter software hdmi
+/hdmi/*
+!/hdmi/modelsim/
 *.elf
 *.objdump
 *.wlf

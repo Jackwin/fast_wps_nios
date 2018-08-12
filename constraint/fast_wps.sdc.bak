@@ -1,0 +1,20 @@
+create_clock -name {altera_reserved_tck} -period 41.667 [get_ports { altera_reserved_tck }]
+set_input_delay -clock altera_reserved_tck -clock_fall -max 5 [get_ports altera_reserved_tdi]
+set_input_delay -clock altera_reserved_tck -clock_fall -max 5 [get_ports altera_reserved_tms]
+set_output_delay -clock altera_reserved_tck 5 [get_ports altera_reserved_tdo]
+
+
+set_clock_groups -asynchronous \
+-group {altera_reserved_tck} \
+-group {clk_50m}
+
+create_clock -name clk_50m -period 20.00 [get_ports clkin_50]
+create_clock -period "125 MHz" -name {clkinbot_p[0]} {*clkinbot_p[0]*}
+create_clock -period "125 MHz" -name {hsma_clk_out_p2} {*hsma_clk_out_p2*}
+
+create_clock -period "100 MHz" -name {clkintop_p[0]} {clkintop_p[0]}
+
+set_false_path -from [get_clocks {clkin_50}] -to [get_clocks {fast_wps_nios_top_i|vpg_inst|pll_vpg_i|pll_vpg_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}]
+
+derive_pll_clocks
+derive_clock_uncertainty

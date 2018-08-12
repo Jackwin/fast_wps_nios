@@ -1,0 +1,23 @@
+db
+simulation
+incremental_db
+output_files
+greybox_tmp
+*.stp
+.qsys_edit
+*.d
+*.o
+*.rpt
+/IP/*
+!/IP/*.qip
+!/IP/*.qsys
+!IP/dma_pcie_gen3x8/*.qsys
+!IP/dma_pcie_gen3x8/pcie_de_ep_dma_g3x8_integrated/synthesis/*.qip
+!IP/dma_pcie_gen3x8/pcie_de_ep_dma_g3x8_integrated/synthesis/*.v
+/nios/*
+!/nios/synthesis/*.qip
+
+##filter software hdmi
+*.elf
+*.objdump
+*.wlf

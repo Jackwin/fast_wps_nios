@@ -18,11 +18,13 @@ greybox_tmp
 !/nios/synthesis/*.qip
 
 ##filter software hdmi
-/hdmi/*
-!/hdmi/rtl/
-!/hdmi/tb/
-!/hdmi/HDMI_Lib/
-!/hdmi/terasic_lib/
+software/hdmi/*
+!software/hdmi_test/
+!software/test7_bsp/
+!software/hdmi/rtl/
+!software/hdmi/tb/
+!software/hdmi/HDMI_Lib/
+!software/hdmi/terasic_lib/
 *.elf
 *.objdump
 *.wlf

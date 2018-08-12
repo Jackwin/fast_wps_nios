@@ -11,20 +11,19 @@ greybox_tmp
 /IP/*
 !/IP/*.qip
 !/IP/*.qsys
-!IP/dma_pcie_gen3x8/*.qsys
-!IP/dma_pcie_gen3x8/pcie_de_ep_dma_g3x8_integrated/synthesis/*.qip
-!IP/dma_pcie_gen3x8/pcie_de_ep_dma_g3x8_integrated/synthesis/*.v
+!/IP/dma_pcie_gen3x8/*.qsys
+!/IP/dma_pcie_gen3x8/pcie_de_ep_dma_g3x8_integrated/synthesis/*.qip
+!/IP/dma_pcie_gen3x8/pcie_de_ep_dma_g3x8_integrated/synthesis/*.v
 /nios/*
 !/nios/synthesis/*.qip
 
-##filter software hdmi
-software/hdmi/*
-!software/hdmi_test/
-!software/test7_bsp/
-!software/hdmi/rtl/
-!software/hdmi/tb/
-!software/hdmi/HDMI_Lib/
-!software/hdmi/terasic_lib/
+/software/hdmi/*
+!/software/hdmi_test/
+!/software/test7_bsp/
+!/software/hdmi/rtl/
+!/software/hdmi/tb/
+!/software/hdmi/HDMI_Lib/
+!/software/hdmi/terasic_lib/
 *.elf
 *.objdump
 *.wlf

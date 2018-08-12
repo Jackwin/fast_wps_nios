@@ -17,7 +17,7 @@ greybox_tmp
 /nios/*
 !/nios/synthesis/*.qip
 
-/software/hdmi/*
+/software/*
 !/software/hdmi_test/
 !/software/test7_bsp/
 !/software/hdmi/rtl/

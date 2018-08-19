@@ -8,6 +8,8 @@ greybox_tmp
 *.d
 *.o
 *.rpt
+pcie_de_ep_dma_g3x8_integrated.sopcinfo
+pcie_de_ep_dma_g3x8.sopcinfo
 /IP/*
 !/IP/*.qip
 !/IP/*.qsys

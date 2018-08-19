@@ -22,10 +22,13 @@ pcie_de_ep_dma_g3x8.sopcinfo
 /software/*
 !/software/hdmi_test/
 !/software/test7_bsp/
+!/software/hdmi/
 !/software/hdmi/rtl/
 !/software/hdmi/tb/
 !/software/hdmi/HDMI_Lib/
 !/software/hdmi/terasic_lib/
+
+/software/hdmi/modelsim
 *.elf
 *.objdump
 *.wlf

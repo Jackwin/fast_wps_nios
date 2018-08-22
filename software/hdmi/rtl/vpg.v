@@ -66,7 +66,7 @@ output [31:0]   onchip_mem_byte_enable,
 output          onchip_mem_write,
 output [255:0]  onchip_mem_write_data,
 
-output          wps_send_done,
+output          wps_ctrl_done_out,
 
 output              vpg_locked,
 output              vpg_pclk,
@@ -257,7 +257,7 @@ wps_top wps_top_inst (
     .onchip_mem_write      (onchip_mem_write),
     .onchip_mem_read_data  (onchip_mem_rddata),
 
-    .wps_send_done         (wps_send_done),
+    .wps_ctrl_done_out      (wps_ctrl_done_out),
 
     .clk250m               (ddr3_emif_clk),
     .clk250m_rst_n         (ddr3_emif_rst_n),

@@ -22,7 +22,7 @@ module wps_top (
     output              onchip_mem_write,
     input [255:0]       onchip_mem_read_data,
 
-    output              wps_send_done,
+    output              wps_ctrl_done_out,
 
     input               clk250m,
     input               clk250m_rst_n,
@@ -178,7 +178,7 @@ wps_controller wps_controller_inst (
     .onchip_mem_read_start_out(onchip_mem_read_start),
     .onchip_mem_read_done_in  (onchip_mem_read_done),
     .wps_send_start_out       (wps_send_start),
-    .wps_send_done            (wps_send_done),
+    .wps_ctrl_done            (wps_ctrl_done_out),
 
     .onchip_mem_chip_select   (onchip_mem_wps_controller_chip_select),
     .onchip_mem_clk_ena       (),

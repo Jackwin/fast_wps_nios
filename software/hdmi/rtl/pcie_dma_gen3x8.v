@@ -66,13 +66,22 @@ module pcie_dma_gen3x8 #(
     input wire          onchip_mem_write,
     input wire [255:0]  onchip_mem_write_data,
 
-    input wire         irq_avalon_master_chipselect,
-    input wire [3:0]   irq_avalon_master_address,
-    input wire         irq_avalon_master_read,
-    input wire         irq_avalon_master_write,
-    input wire [31:0]  irq_avalon_master_writedata,
-    output wire         irq_avalon_master_waitrequest,
-    output wire [31:0]  irq_avalon_master_readdata
+    input wire         irq_avalon_master0_chipselect,
+    input wire [3:0]   irq_avalon_master0_address,
+    input wire         irq_avalon_master0_read,
+    input wire         irq_avalon_master0_write,
+    input wire [31:0]  irq_avalon_master0_writedata,
+    output wire         irq_avalon_master0_waitrequest,
+    output wire [31:0]  irq_avalon_master0_readdata,
+
+    input wire         irq_avalon_master1_chipselect,
+    input wire [3:0]   irq_avalon_master1_address,
+    input wire         irq_avalon_master1_read,
+    input wire         irq_avalon_master1_write,
+    input wire [31:0]  irq_avalon_master1_writedata,
+    output wire         irq_avalon_master1_waitrequest,
+    output wire [31:0]  irq_avalon_master1_readdata
+
 /*
     input wire [ADDR_WIDTH-1:0]            ddr3_start_to_wr_addr_in,
     input wire [LEN_WIDTH-1:0]             ddr3_bytes_to_write_in,
@@ -310,13 +319,21 @@ pcie_de_ep_dma_g3x8_integrated u0 (
 
 
     // interrput
-    .irq_bar_source_0_irq_avalon_slave_chipselect(irq_avalon_master_chipselect),
-    .irq_bar_source_0_irq_avalon_slave_address(irq_avalon_master_address),
-    .irq_bar_source_0_irq_avalon_slave_read(irq_avalon_master_read),
-    .irq_bar_source_0_irq_avalon_slave_write(irq_avalon_master_write),
-    .irq_bar_source_0_irq_avalon_slave_writedata(irq_avalon_master_writedata),
-    .irq_bar_source_0_irq_avalon_slave_waitrequest(irq_avalon_master_waitrequest),
-    .irq_bar_source_0_irq_avalon_slave_readdata(irq_avalon_master_readdata)
+    .irq_bar_source_0_irq_avalon_slave_chipselect(irq_avalon_master0_chipselect),
+    .irq_bar_source_0_irq_avalon_slave_address(irq_avalon_master0_address),
+    .irq_bar_source_0_irq_avalon_slave_read(irq_avalon_master0_read),
+    .irq_bar_source_0_irq_avalon_slave_write(irq_avalon_master0_write),
+    .irq_bar_source_0_irq_avalon_slave_writedata(irq_avalon_master0_writedata),
+    .irq_bar_source_0_irq_avalon_slave_waitrequest(irq_avalon_master0_waitrequest),
+    .irq_bar_source_0_irq_avalon_slave_readdata(irq_avalon_master0_readdata),
+
+    .irq_bar_source_1_irq_avalon_slave_chipselect(irq_avalon_master1_chipselect),
+    .irq_bar_source_1_irq_avalon_slave_address(irq_avalon_master1_address),
+    .irq_bar_source_1_irq_avalon_slave_read(irq_avalon_master1_read),
+    .irq_bar_source_1_irq_avalon_slave_write(irq_avalon_master1_write),
+    .irq_bar_source_1_irq_avalon_slave_writedata(irq_avalon_master1_writedata),
+    .irq_bar_source_1_irq_avalon_slave_waitrequest(irq_avalon_master1_waitrequest),
+    .irq_bar_source_1_irq_avalon_slave_readdata(irq_avalon_master1_readdata),
 
 
     );

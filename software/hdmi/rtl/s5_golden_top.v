@@ -314,7 +314,12 @@ wire [3:0]   irq_avalon_master_address;
 wire         irq_avalon_master_write;
 wire [31:0]  irq_avalon_master_writedata;
 
-wire        wps_send_done;
+wire         usr_irq_avalon_master_chipselect;
+wire [3:0]   usr_irq_avalon_master_address;
+wire         usr_irq_avalon_master_write;
+wire [31:0]  usr_irq_avalon_master_writedata;
+
+wire        wps_ctrl_done;
 
 fast_wps_nios_top fast_wps_nios_top_i (
     .clk50m_in              (clkin_50),
@@ -361,7 +366,7 @@ fast_wps_nios_top fast_wps_nios_top_i (
     .onchip_mem_write      (onchip_mem_write),
     .onchip_mem_write_data (onchip_mem_write_data),
 
-    .wps_send_done         (wps_send_done),
+    .wps_ctrl_done_out         (wps_ctrl_done),
     //.fpga_adc_clk_n(fpga_adc_clk_n),
     .or_led                 (or_led),
     .adc_sclk               (adc_sclk),
@@ -477,28 +482,38 @@ pcie_dma_gen3x8 pcie_dma_gen3x8_i (
    .onchip_mem_byte_enable(onchip_mem_byte_enable),
    .onchip_mem_write      (onchip_mem_write),
    .onchip_mem_write_data (onchip_mem_write_data),
-   .irq_avalon_master_chipselect (irq_avalon_master_chipselect),
-   .irq_avalon_master_address    (irq_avalon_master_address),
-   .irq_avalon_master_read       (),
-   .irq_avalon_master_write      (irq_avalon_master_write),
-   .irq_avalon_master_writedata  (irq_avalon_master_writedata),
-   .irq_avalon_master_waitrequest(),
-   .irq_avalon_master_readdata   ()
+   .irq_avalon_master0_chipselect (irq_avalon_master_chipselect),
+   .irq_avalon_master0_address    (irq_avalon_master_address),
+   .irq_avalon_master0_read       (),
+   .irq_avalon_master0_write      (irq_avalon_master_write),
+   .irq_avalon_master0_writedata  (irq_avalon_master_writedata),
+   .irq_avalon_master0_waitrequest(),
+   .irq_avalon_master0_readdata   (),
+
+   .irq_avalon_master1_chipselect (usr_irq_avalon_master_chipselect),
+   .irq_avalon_master1_address    (usr_irq_avalon_master_address),
+   .irq_avalon_master1_read       (),
+   .irq_avalon_master1_write      (usr_irq_avalon_master_write),
+   .irq_avalon_master1_writedata  (usr_irq_avalon_master_writedata),
+   .irq_avalon_master1_waitrequest(),
+   .irq_avalon_master1_readdata   ()
+
+
 
    );
 
-reg    wps_send_done_r1;
-wire    wps_send_done_extend;
-reg     wps_send_done_extend_r, wps_send_done_extend_p;
+reg    wps_ctrl_done_r1;
+wire    wps_ctrl_done_extend;
+reg     wps_ctrl_done_extend_r, wps_ctrl_done_extend_p;
 always @(posedge ddr3_clk) begin
-    wps_send_done_r1 <= wps_send_done;
+    wps_ctrl_done_r1 <= wps_ctrl_done;
 end // always @(posedge ddr3_clk)
 
-assign wps_send_done_extend = wps_send_done_r1 | wps_send_done;
+assign wps_ctrl_done_extend = wps_ctrl_done_r1 | wps_ctrl_done;
 
 always @(posedge pld_clk) begin
-    wps_send_done_extend_r <= wps_send_done_extend;
-    wps_send_done_extend_p <= ~wps_send_done_extend_r & wps_send_done_extend;
+    wps_ctrl_done_extend_r <= wps_ctrl_done_extend;
+    wps_ctrl_done_extend_p <= ~wps_ctrl_done_extend_r & wps_ctrl_done_extend;
 end
 
 altsource_probe #(
@@ -524,7 +539,20 @@ always @(posedge hdmi_tx_pclk or negedge ddr3_rst_n) begin
     end
 end
 
-// Interrupt
+
+
+usr_irq wps_ctrl_done_irq_inst(
+    .clk                          (pld_clk),
+    .rst_n                        (local_rstn),
+    .usr_irq_in                   (wps_ctrl_done_extend_p),
+    .irq_avalon_master_chipselect (irq_avalon_master_chipselect),
+    .irq_avalon_master_address    (irq_avalon_master_address),
+    .irq_avalon_master_writedata  (irq_avalon_master_writedata),
+    .irq_avalon_master_write      (irq_avalon_master_write)
+    );
+
+
+// -------------------  UserInterrupt ----------------------------------
 wire        usr_irq_vio;
 altsource_probe #(
     .sld_auto_instance_index ("YES"),
@@ -537,15 +565,14 @@ altsource_probe #(
 ) usr_irq_source (
     .source(usr_irq_vio)
 );
-
 usr_irq usr_irq_inst(
     .clk                          (pld_clk),
     .rst_n                        (local_rstn),
-    .usr_irq_in                   (wps_send_done_extend_p),
-    .irq_avalon_master_chipselect (irq_avalon_master_chipselect),
-    .irq_avalon_master_address    (irq_avalon_master_address),
-    .irq_avalon_master_writedata  (irq_avalon_master_writedata),
-    .irq_avalon_master_write      (irq_avalon_master_write)
+    .usr_irq_in                   (usr_irq_vio),
+    .irq_avalon_master_chipselect (usr_irq_avalon_master_chipselect),
+    .irq_avalon_master_address    (usr_irq_avalon_master_address),
+    .irq_avalon_master_writedata  (usr_irq_avalon_master_writedata),
+    .irq_avalon_master_write      (usr_irq_avalon_master_write)
     );
 /*
 timer #(.MAX(32'h2d7bc00))

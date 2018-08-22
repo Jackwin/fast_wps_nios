@@ -13,11 +13,27 @@
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "12";
          type = "int";
       }
    }
    element IRQ_BAR_source_0.bar_avalon_slave
+   {
+      datum baseAddress
+      {
+         value = "48";
+         type = "String";
+      }
+   }
+   element IRQ_BAR_source_1
+   {
+      datum _sortIndex
+      {
+         value = "13";
+         type = "int";
+      }
+   }
+   element IRQ_BAR_source_1.bar_avalon_slave
    {
       datum baseAddress
       {
@@ -29,7 +45,7 @@
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "11";
          type = "int";
       }
    }
@@ -102,22 +118,6 @@
       datum baseAddress
       {
          value = "32";
-         type = "String";
-      }
-   }
-   element irq_source_2
-   {
-      datum _sortIndex
-      {
-         value = "11";
-         type = "int";
-      }
-   }
-   element irq_source_2.Irq_source_slave
-   {
-      datum baseAddress
-      {
-         value = "48";
          type = "String";
       }
    }
@@ -237,6 +237,11 @@
    type="avalon"
    dir="end" />
  <interface
+   name="irq_bar_source_1_irq_avalon_slave"
+   internal="IRQ_BAR_source_1.irq_avalon_slave"
+   type="avalon"
+   dir="end" />
+ <interface
    name="memory"
    internal="mem_if_ddr3_emif_0.memory"
    type="conduit"
@@ -307,6 +312,11 @@
    version="1.0"
    enabled="1" />
  <module
+   name="IRQ_BAR_source_1"
+   kind="IRQ_BAR_source"
+   version="1.0"
+   enabled="1" />
+ <module
    name="address_span_extender_0"
    kind="altera_address_span_extender"
    version="17.0"
@@ -360,7 +370,6 @@
  </module>
  <module name="irq_source_0" kind="irq_source" version="1.0" enabled="1" />
  <module name="irq_source_1" kind="irq_source" version="1.0" enabled="1" />
- <module name="irq_source_2" kind="irq_source" version="1.0" enabled="1" />
  <module
    name="mem_if_ddr3_emif_0"
    kind="altera_mem_if_ddr3_emif"
@@ -1005,15 +1014,6 @@
    kind="avalon"
    version="17.0"
    start="pcie_256_dma.Rxm_BAR2"
-   end="irq_source_2.Irq_source_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0030" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="17.0"
-   start="pcie_256_dma.Rxm_BAR2"
    end="irq_source_0.Irq_source_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0010" />
@@ -1033,6 +1033,15 @@
    version="17.0"
    start="pcie_256_dma.Rxm_BAR2"
    end="IRQ_BAR_source_0.bar_avalon_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0030" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="17.0"
+   start="pcie_256_dma.Rxm_BAR2"
+   end="IRQ_BAR_source_1.bar_avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0040" />
   <parameter name="defaultConnection" value="false" />
@@ -1198,17 +1207,17 @@
    kind="clock"
    version="17.0"
    start="pcie_256_dma.coreclkout"
-   end="irq_source_2.clock" />
- <connection
-   kind="clock"
-   version="17.0"
-   start="pcie_256_dma.coreclkout"
    end="address_span_extender_0.clock" />
  <connection
    kind="clock"
    version="17.0"
    start="pcie_256_dma.coreclkout"
    end="IRQ_BAR_source_0.clock_sink" />
+ <connection
+   kind="clock"
+   version="17.0"
+   start="pcie_256_dma.coreclkout"
+   end="IRQ_BAR_source_1.clock_sink" />
  <connection
    kind="clock"
    version="17.0"
@@ -1287,15 +1296,15 @@
    kind="interrupt"
    version="17.0"
    start="pcie_irq_0.interrupt_receiver"
-   end="irq_source_2.Interrupt_out">
-  <parameter name="irqNumber" value="2" />
+   end="IRQ_BAR_source_0.interrupt_sender">
+  <parameter name="irqNumber" value="3" />
  </connection>
  <connection
    kind="interrupt"
    version="17.0"
    start="pcie_irq_0.interrupt_receiver"
-   end="IRQ_BAR_source_0.interrupt_sender">
-  <parameter name="irqNumber" value="3" />
+   end="IRQ_BAR_source_1.interrupt_sender">
+  <parameter name="irqNumber" value="2" />
  </connection>
  <connection
    kind="reset"
@@ -1331,11 +1340,6 @@
    kind="reset"
    version="17.0"
    start="pcie_256_dma.nreset_status"
-   end="irq_source_2.reset_n" />
- <connection
-   kind="reset"
-   version="17.0"
-   start="pcie_256_dma.nreset_status"
    end="irq_source_0.reset_n" />
  <connection
    kind="reset"
@@ -1347,6 +1351,11 @@
    version="17.0"
    start="pcie_256_dma.nreset_status"
    end="IRQ_BAR_source_0.reset_sink" />
+ <connection
+   kind="reset"
+   version="17.0"
+   start="pcie_256_dma.nreset_status"
+   end="IRQ_BAR_source_1.reset_sink" />
  <connection
    kind="reset"
    version="17.0"

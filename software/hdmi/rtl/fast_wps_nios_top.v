@@ -46,7 +46,7 @@ module fast_wps_nios_top (
     output [31:0]   ddr3_emif_byte_enable,
     output [4:0]    ddr3_emif_burst_count,
 
-    output          wps_send_done,
+    output          wps_ctrl_done_out,
 
 //    output          fpga_adc_clk_n,
     output          or_led,
@@ -207,7 +207,7 @@ vpg vpg_inst(
     .onchip_mem_write      (onchip_mem_write),
     .onchip_mem_write_data (onchip_mem_write_data),
 
-    .wps_send_done         (wps_send_done),
+    .wps_ctrl_done_out         (wps_ctrl_done_out),
 
     .mode       (vpg_disp_mode),
     .mode_change(vpg_disp_mode_change),

@@ -31,3 +31,6 @@ set_false_path -from [get_clocks {pcie_dma_gen3x8_i|u0|pcie_256_dma|altera_s5_a2
 set_false_path -from [get_clocks {clkinbot_p[0]}] -to [get_clocks {pcie_dma_gen3x8_i|u0|pcie_256_dma|altera_s5_a2p|altpcie_hip_256_pipen1b|stratixv_hssi_gen3_pcie_hip|coreclkout}]
 set_false_path -from [get_clocks {pcie_dma_gen3x8_i|u0|pcie_256_dma|altera_s5_a2p|altpcie_hip_256_pipen1b|stratixv_hssi_gen3_pcie_hip|coreclkout}] -to [get_clocks {pcie_dma_gen3x8_i|u0|mem_if_ddr3_emif_0|pll0|pll7~PLL_OUTPUT_COUNTER|divclk}]
 set_false_path -from [get_clocks {pcie_dma_gen3x8_i|u0|pcie_256_dma|altera_s5_a2p|altpcie_hip_256_pipen1b|stratixv_hssi_gen3_pcie_hip|coreclkout}] -to [get_clocks {pcie_dma_gen3x8_i|u0|mem_if_ddr3_emif_0|pll0|pll6~PLL_OUTPUT_COUNTER|divclk}]
+
+
+set_false_path -from [get_clocks {pcie_dma_gen3x8_i|u0|mem_if_ddr3_emif_0|pll0|pll1~PLL_OUTPUT_COUNTER|divclk}] -to [get_clocks {pcie_dma_gen3x8_i|u0|pcie_256_dma|altera_s5_a2p|altpcie_hip_256_pipen1b|stratixv_hssi_gen3_pcie_hip|coreclkout}]

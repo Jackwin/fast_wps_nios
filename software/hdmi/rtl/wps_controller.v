@@ -42,7 +42,7 @@ module wps_controller (
     input               onchip_mem_read_done_in,
     // -- Interface to wps_send.v
     output reg [1:0]    wps_send_start_out,
-    output reg          wps_send_done,
+    output reg          wps_ctrl_done,
 
     //
     output              onchip_mem_chip_select,
@@ -141,7 +141,7 @@ always @(posedge clk) begin
         to_read_frame_num_out <= 'h0;
         one_frame_byte_out <= 'h0;
         capture_pulse_cycle_out <= 'h0;
-         wps_send_done <= 1'b0;
+         wps_ctrl_done <= 1'b0;
     end else begin
         ddr3_read_start_out <= 1'b0;
         onchip_mem_read_start_out <= 1'b0;
@@ -151,7 +151,7 @@ always @(posedge clk) begin
         mem_rd <= 1'b0;
         mem_byte_enable <= 'h0;
         poll_reg_timer_ena <= 1'b0;
-        wps_send_done <= 1'b0;
+        wps_ctrl_done <= 1'b0;
         case (state)
             POLL_REG: begin
                 // If poll more than one onchip memory address, add a counter
@@ -240,7 +240,7 @@ always @(posedge clk) begin
                 mem_wr <=1'b1;
                 mem_wr_data <= {224'h0, 32'h00800000}; // Assert read_done
                 state <= POLL_REG;
-                wps_send_done <= 1'b1;
+                wps_ctrl_done <= 1'b1;
                 $display("Update reg Done");
             end
             default: state <= POLL_REG;

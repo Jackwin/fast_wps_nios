@@ -22,15 +22,22 @@ always @(posedge clk or negedge rst_n) begin
     if (~rst_n) begin
         irq_avalon_master_chipselect <= 1'b0;
         irq_avalon_master_write <= 1'b0;
-  
+
         irq_avalon_master_writedata <= 'h0;
     end // if (~rst_n)
     else begin
+        // Generate interrupt
         if (~usr_irq_r & usr_irq_in) begin
             irq_avalon_master_chipselect <= 1'b1;
             irq_avalon_master_writedata <= 32'h1;
             irq_avalon_master_write <= 1'b1;
         end // if (~usr_irq_r & usr_irq_in)
+        // Clear interrupt
+        else if (usr_irq_r & ~usr_irq_in) begin
+            irq_avalon_master_chipselect <= 1'b1;
+            irq_avalon_master_writedata <= 'h0;
+            irq_avalon_master_write <= 1'b1;
+        end
         else begin
             irq_avalon_master_chipselect <= 1'b0;
             irq_avalon_master_writedata <= 'h0;
